@@ -1,0 +1,10 @@
+.text-danger,
+.text-black-50 {
+    cursor: pointer;
+}
+.text-danger:hover {
+    color: rgba(0,0,0,.5)!important;
+}
+.text-black-50:hover {
+    color: #dc3545!important;
+}

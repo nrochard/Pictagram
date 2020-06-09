@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="UTF-8">
+    <title>Pictagram</title>
+    <meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6/dist/vue.js"></script>
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar fixed-top navbar-dark bg-danger">
+            <div class="container">
+                <a class="navbar-brand" href="#">Pictagram
+                ({{ likedTags }})<i class="fas fa-heart"></i></a>
+                <form @submit.prevent class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search"
+                        placeholder="Tapez un mot-clé"
+                        aria-label="Search"
+                        @input="typing"
+                        v-model="query"
+                    >
+                </form>
+            </div>
+        </nav>
+        <div class="container mt-5 pt-3">
+            <div class="row justify-content-center">
+                <div v-for="post of posts" :key="`post-${post.id}`" class="col-md-4 col-sm-12 mt-4">
+                    <div class="card">
+                        <img :src="`./img/${post.img}`" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-title h6"
+                                @click="like(post.id)"
+                                :class="{
+                                    'text-black-50' : !post.isLiked,
+                                    'text-danger' : post.isLiked
+                                }"
+                            >
+                                <i class="far fa-heart"
+                                   :class="{
+                                        far: !post.isLiked,
+                                        fas: post.isLiked
+                                   }"
+                                ></i> J’aime
+                            </p>
+                            <h1 class="h5">{{ post.title }}</h1>
+                            <p class="card-text">
+                                <!-- je récupère le tag et l'index-->
+                                <!--car on a besoin d'un identifiant unique -->
+                                <a v-for="(tag, tagIndex) of post.tags.split(',')"
+                                   :key="`tag-${post.id}-${tagIndex}`"
+                                   href="#">
+                                #{{tag}}<wbr></a>
+<!--                                <a href="#">#message<wbr></a>-->
+<!--                                <a href="#">#graffiti<wbr></a>-->
+<!--                                <a href="#">#canal<wbr></a>-->
+<!--                                <a href="#">#slap<wbr></a>-->
+<!--                                <a href="#">#bobigny</a>-->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
